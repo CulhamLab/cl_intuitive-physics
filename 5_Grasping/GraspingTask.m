@@ -324,6 +324,18 @@ for v = 1:d.number_volumes
     need_illum_start = d.volume_data(v).schedule.HasIllum;
     need_illum_stop = d.volume_data(v).schedule.HasIllum;
 
+    % experimenter LED
+    if d.volume_data(v).schedule.HasExpLED
+        if ~p.DEBUG
+            ard.analogWrite(p.ARDUINO.EXPERIMENTOR.PIN, p.ARDUINO.EXPERIMENTOR.BRIGHTNESS);
+        end
+        fprintf("Experimentor LED is on\n");
+    else
+        if ~p.DEBUG
+            ard.analogWrite(p.ARDUINO.EXPERIMENTOR.PIN, 0);
+        end
+    end
+
     % volume events
     while 1
         % time
