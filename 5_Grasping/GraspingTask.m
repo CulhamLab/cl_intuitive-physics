@@ -154,7 +154,7 @@ end
 time_in_volume_can_accept_trigger =             p.TR - p.TRIGGER.TIME_BEFORE_TRIGGER_CAN_START_LOOKING_SEC;
 time_in_volume_must_stop_and_look_for_trigger = p.TR - p.TRIGGER.TIME_BEFORE_TRIGGER_MUST_START_LOOKING_SEC;
 time_in_volume_trigger_was_not_received =       p.TR + p.TRIGGER.TIME_AFTER_MISSED_TRIGGER_STOP_LOOKING_SEC;
-cue_start = p.TR - (p.DURATION.AUDIO + p.DURATION.ILLUMINATOR);
+cue_start = 0; %p.TR - (p.DURATION.AUDIO + p.DURATION.ILLUMINATOR);
 time_audio_start = cue_start;
 time_audio_end = cue_start + p.DURATION.AUDIO;
 time_illum_start = time_audio_end;
