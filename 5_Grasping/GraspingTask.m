@@ -277,6 +277,11 @@ while 1
     end
 end
 
+% turn off illum and exp
+for LED = ["ILLUMINATOR" "EXPERIMENTOR"]
+    ard.analogWrite(p.ARDUINO.(LED).PIN, 0);
+end
+
 
 %% This is time-zero, start of first volume
 d.t0 = GetSecs;
