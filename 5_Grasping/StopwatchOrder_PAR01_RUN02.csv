@@ -1,0 +1,37 @@
+OnsetSec,OffsetSec,Stopwatch,Condition,HasLongITI,,"Duration in seconds (settings at top of script, must be divisible by TR)",
+16,20,00:16,Touch,0,,Baseline Initial,16
+28,32,00:28,Look,0,,Task Execution,4
+40,44,00:40,Grasp,1,,ITI Short,8
+56,60,00:56,Grasp,0,,ITI Long,12
+68,72,01:08,Touch,0,,Baseline Final,16
+80,84,01:20,Look,1,,,
+96,100,01:36,Look,1,,TotalSec,512
+112,116,01:52,Touch,0,,,
+124,128,02:04,Grasp,0,,,
+136,140,02:16,Grasp,0,,,
+148,152,02:28,Look,1,,,
+164,168,02:44,Touch,0,,,
+176,180,02:56,Touch,1,,,
+192,196,03:12,Grasp,0,,,
+204,208,03:24,Look,0,,,
+216,220,03:36,Look,0,,,
+228,232,03:48,Grasp,1,,,
+244,248,04:04,Touch,0,,,
+256,260,04:16,Touch,0,,,
+268,272,04:28,Grasp,1,,,
+284,288,04:44,Look,0,,,
+296,300,04:56,Look,0,,,
+308,312,05:08,Touch,0,,,
+320,324,05:20,Grasp,1,,,
+336,340,05:36,Grasp,0,,,
+348,352,05:48,Look,0,,,
+360,364,06:00,Touch,1,,,
+376,380,06:16,Touch,1,,,
+392,396,06:32,Look,0,,,
+404,408,06:44,Grasp,0,,,
+416,420,06:56,Grasp,0,,,
+428,432,07:08,Touch,1,,,
+444,448,07:24,Look,0,,,
+456,460,07:36,Look,1,,,
+472,476,07:52,Grasp,0,,,
+484,488,08:04,Touch,0,,,
