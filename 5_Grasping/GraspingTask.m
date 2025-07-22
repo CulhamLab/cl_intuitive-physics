@@ -139,7 +139,7 @@ end
 if ~p.DEBUG
     % get or connect
     global ard
-    if ~isobject(ard) | ~ard.isvalid
+    if ~isobject(ard) || ~ard.isvalid
         ard = init_arduino('Mega 2560');
     end
 
