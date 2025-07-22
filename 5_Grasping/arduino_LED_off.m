@@ -11,6 +11,6 @@ if ~isobject(ard) | ~ard.isvalid
 end
 
 %turn on specified pin
-for i = 1:size(pin_values)
+for i = 1:size(pin_values, 1)
     ard.analogWrite(pin_values(i,1), 0);
 end
