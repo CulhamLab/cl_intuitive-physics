@@ -313,6 +313,18 @@ for v = 1:d.number_volumes
     d.volume_data(v).schedule = d.schedule(v,:);
     disp(d.volume_data(v).schedule)
 
+    % experimenter LED
+    if d.volume_data(v).schedule.HasExpLED
+        if ~p.DEBUG
+            ard.analogWrite(p.ARDUINO.EXPERIMENTOR.PIN, p.ARDUINO.EXPERIMENTOR.BRIGHTNESS);
+        end
+        fprintf("-Experimentor LED is on\n");
+    else
+        if ~p.DEBUG
+            ard.analogWrite(p.ARDUINO.EXPERIMENTOR.PIN, 0);
+        end
+    end
+
     % save if baseline or ITI AND there is at least 500ms remaining in the volume
     if d.volume_data(v).schedule.Condition=="Baseline" || d.volume_data(v).schedule.Phase=="ITI"
         t = GetSecs - t0;
@@ -330,18 +342,6 @@ for v = 1:d.number_volumes
     % illum LED
     need_illum_start = d.volume_data(v).schedule.HasIllum;
     need_illum_stop = d.volume_data(v).schedule.HasIllum;
-
-    % experimenter LED
-    if d.volume_data(v).schedule.HasExpLED
-        if ~p.DEBUG
-            ard.analogWrite(p.ARDUINO.EXPERIMENTOR.PIN, p.ARDUINO.EXPERIMENTOR.BRIGHTNESS);
-        end
-        fprintf("Experimentor LED is on\n");
-    else
-        if ~p.DEBUG
-            ard.analogWrite(p.ARDUINO.EXPERIMENTOR.PIN, 0);
-        end
-    end
 
     % volume events
     while 1
