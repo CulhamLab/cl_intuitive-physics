@@ -278,8 +278,10 @@ while 1
 end
 
 % turn off illum and exp
-for LED = ["ILLUMINATOR" "EXPERIMENTOR"]
-    ard.analogWrite(p.ARDUINO.(LED).PIN, 0);
+if ~p.DEBUG
+    for LED = ["ILLUMINATOR" "EXPERIMENTOR"]
+        ard.analogWrite(p.ARDUINO.(LED).PIN, 0);
+    end
 end
 
 
