@@ -120,7 +120,7 @@ for cond = unique(d.loaded_order.Condition)'
     end
     
     % open player
-    s.(cond) = PsychPortAudio('Open', p.SOUND.DEVICE_ID, 1, [], freq, p.SOUND.CHANNELS, [], p.SOUND.LATENCY);
+    s.(cond) = PsychPortAudio('Open', p.SOUND.DEVICE_ID, 1, [], p.SOUND.FREQUENCY, p.SOUND.CHANNELS, [], p.SOUND.LATENCY);
 
     % place sound in player
     PsychPortAudio('FillBuffer', s.(cond), snd);
