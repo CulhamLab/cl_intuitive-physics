@@ -182,7 +182,7 @@ fs = ["Volume"      "double"
       "HasIllum"    "logical"
       "HasExpLED"   "logical"
       ];
-d.schedule = table(Size=[d.number_volumes size(fs,1)], VariableNames=fs(:,1), VariableTypes=fs(:,2));
+d.schedule = table('Size', [d.number_volumes size(fs,1)], 'VariableNames', fs(:,1), 'VariableTypes', fs(:,2));
 vol = 0;
 
 % initial baseline
