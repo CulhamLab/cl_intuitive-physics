@@ -44,20 +44,26 @@ for fid = 1:number_files
 
         % find block on/offset
         d = [0; diff(is_cond)];
-        vol_on = find(d==1);    % first vol with presentation
-        vol_off = find(d==-1);  % first vol without presentation
+        vol_on = find(d==1);
+        % vol_off = find(d==-1);
+
+        % onset 500ms into volume (after audio, right as illum turns on)
+        onsets = (file.d.schedule.ExpectedOnset(vol_on) * 1000) + 500;
+        
+        % 2sec event dur
+        offsets = onsets + 2000;
 
         % onoff in msec
-        onoff = file.d.schedule.ExpectedOnset([vol_on vol_off]) * 1000;
+        onoff = [onsets offsets];
         
         % colour
         switch cond
             case "Look" 
-                colour = [0 0 255];
-            case "Touch" 
-                colour = [128 0 0];
-            case "Grasp"
                 colour = [255 0 0];
+            case "Touch" 
+                colour = [0 0 255];
+            case "Grasp"
+                colour = [0 255 0];
             otherwise
                 error
         end
