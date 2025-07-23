@@ -1,0 +1,51 @@
+
+FileVersion:        2
+
+ResolutionOfTime:   msec
+
+Experiment:         3_StaticToolAndHandLocalizer
+
+BackgroundColor:    0 0 0
+TextColor:          255 255 255
+TimeCourseColor:    192 192 192
+TimeCourseThick:    2
+ReferenceFuncColor: 0 0 80
+ReferenceFuncThick: 2
+
+NrOfConditions:     4
+
+Tools
+5
+  21000        42000
+ 168000       189000
+ 252000       273000
+ 399000       420000
+ 525000       546000
+Color:              255 0 0
+
+UpperLimbs
+5
+  42000        63000
+ 126000       147000
+ 315000       336000
+ 378000       399000
+ 504000       525000
+Color:              0 255 0
+
+Objects
+5
+  63000        84000
+ 210000       231000
+ 294000       315000
+ 357000       378000
+ 441000       462000
+Color:              0 0 255
+
+Scrambled
+5
+  84000       105000
+ 147000       168000
+ 231000       252000
+ 420000       441000
+ 483000       504000
+Color:              128 128 128
