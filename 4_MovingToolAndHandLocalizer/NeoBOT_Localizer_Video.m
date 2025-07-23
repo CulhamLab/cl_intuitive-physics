@@ -87,7 +87,7 @@ p.FIXATION_SIZE_PIXELS = [50 50]; %height width
 p.FIXATION_DURING_BASELINES = true;
 
 %Psychtoolbox screen
-p.SCREEN_NUMBER = 2;
+p.SCREEN_NUMBER = 0;
 p.SCREEN_RECT = []; %[] is fullscreen
 p.SCREEN_BGD_COLOUR = [0 0 0]; %black background
 p.SCREEN_EXPECTED_FLIP_DELAY_SEC = 1/60; %monitor refresh rate

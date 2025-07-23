@@ -321,7 +321,9 @@ end
 % use getGPOnebackResponse when using gamepad
 function event=getKPOneBackResponse(event, startrt, trialctr, categories, stims)
 kpyes=KbName('1');
+%kpyes=KbName({'1!' '2@' '3#' '4$' 'r' 'g' 'b' 'y' '1' '2' '3' '4'});
 kbyes=KbName('1!');
+%kbyes=KbName({'1!' '2@' '3#' '4$' 'r' 'g' 'b' 'y' '1' '2' '3' '4'});
 [~, ~, KeyCode]=KbCheck;
 if(KeyCode(kbyes) || KeyCode(kpyes))
     %Log the new button press event, but only if an event has
@@ -358,7 +360,9 @@ end
 %triggers before proceeding
 function KPDummyVolumes(nvolumes)
 kptrigger=KbName('5');
+%kptrigger=KbName({'5%' 't' '5'});
 kbtrigger=KbName('5%');
+%kbtrigger=KbName({'5%' 't' '5'});
 TRCounter=0;
 %This counter is assuming that the scanner sends a keyboard trigger (The
 %Siemens Tim Trio 3T sends a numeric '5'). This may require modification on the line checking the values in KeyCode.

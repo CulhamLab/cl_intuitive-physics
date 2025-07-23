@@ -1,0 +1,43 @@
+0.000	0	18	1	Baseline
+18.000	2	9	2	color	3a.mov	0
+27.000	2	9	2	color	34b.mov	0
+36.000	1	9	3	physics	10b.mov	71
+45.000	1	9	3	physics	13c.mov	0
+54.000	2	9	4	color	11c.mov	66
+63.000	2	9	4	color	25a.mov	82
+72.000	2	9	5	color	23b.mov	0
+81.000	2	9	5	color	37a.mov	66
+90.000	1	9	6	physics	32c.mov	0
+99.000	1	9	6	physics	22c.mov	82
+108.000	1	9	7	physics	14a.mov	71
+117.000	1	9	7	physics	42b.mov	82
+126.000	2	9	8	color	6a.mov	0
+135.000	2	9	8	color	28b.mov	89
+144.000	1	9	9	physics	25a.mov	0
+153.000	1	9	9	physics	20c.mov	71
+162.000	2	9	10	color	20c.mov	89
+171.000	2	9	10	color	2b.mov	0
+180.000	1	9	11	physics	18c.mov	0
+189.000	1	9	11	physics	7c.mov	82
+198.000	0	18	12	Baseline
+216.000	1	9	13	physics	23b.mov	71
+225.000	1	9	13	physics	40c.mov	71
+234.000	2	9	14	color	40c.mov	66
+243.000	2	9	14	color	18c.mov	89
+252.000	1	9	15	physics	11c.mov	71
+261.000	1	9	15	physics	16b.mov	0
+270.000	2	9	16	color	42b.mov	82
+279.000	2	9	16	color	22c.mov	0
+288.000	1	9	17	physics	28b.mov	0
+297.000	1	9	17	physics	6a.mov	0
+306.000	1	9	18	physics	2b.mov	71
+315.000	1	9	18	physics	34b.mov	71
+324.000	2	9	19	color	14a.mov	0
+333.000	2	9	19	color	10b.mov	89
+342.000	2	9	20	color	32c.mov	0
+351.000	2	9	20	color	13c.mov	0
+360.000	1	9	21	physics	37a.mov	82
+369.000	1	9	21	physics	3a.mov	82
+378.000	2	9	22	color	16b.mov	89
+387.000	2	9	22	color	7c.mov	0
+396.000	0	18	23	Baseline

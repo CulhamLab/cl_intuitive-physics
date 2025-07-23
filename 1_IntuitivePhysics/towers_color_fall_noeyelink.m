@@ -10,7 +10,7 @@ function [] = towers_color_fall_noeyelink(subj_ID,run_num)
 % 207 volumes with a 2s TR
 
 rng('default');
-stim_dir = 'D:/Culham/Ben/MATLAB/towerloc_to_sani/new_towers_movies/';
+stim_dir = 'C:/Users/VisionLab/Documents/GitHub/cl_intuitive-physics/1_IntuitivePhysics/new_towers_movies/';
 save_path = './results/';
 KbName('UnifyKeyNames')
 esckey = KbName('ESCAPE');

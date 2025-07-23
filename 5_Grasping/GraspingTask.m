@@ -28,7 +28,7 @@ p.TIMING.BASELINE_FINAL =   16;
 p.SOUND.VOLUME = 1; % 1 = 100%
 p.SOUND.LATENCY = .08; %lower = better timing, too low = loss of audio quality or crash
 p.SOUND.CHANNELS = 1;
-p.SOUND.DEVICE_ID = 2; %seems to work
+p.SOUND.DEVICE_ID = 1; %seems to work
 p.SOUND.FREQUENCY = 44100;
 p.SOUND.FILE_TYPE = ".wav";
 
