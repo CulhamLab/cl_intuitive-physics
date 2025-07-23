@@ -53,19 +53,23 @@ for fid = 1:number_files
         switch conditions(cond_ID)
             case "Tool"
                 colour = [255 0 0];
+                name = "Tools";
             case "Hand"
                 colour = [0 255 0];
+                name = "Hands";
             case "Object"
                 colour = [0 0 255];
+                name = "Objects";
             case "Phase"
-                colour = [128 128 128];
+                colour = [150 150 150];
+                name = "Scrambled";
             otherwise
                 error
         end
 
         % Populate PRT
         c=c+1;
-        prt.Cond(c).ConditionName = {conditions(cond_ID).char};
+        prt.Cond(c).ConditionName = {name.char};
         prt.Cond(c).NrOfOnOffsets = size(onoff, 1);
         prt.Cond(c).OnOffsets = onoff;
         prt.Cond(c).Weights = zeros(prt.Cond(c).NrOfOnOffsets, 0);

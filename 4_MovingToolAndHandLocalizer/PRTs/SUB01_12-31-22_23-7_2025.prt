@@ -14,7 +14,7 @@ ReferenceFuncThick: 2
 
 NrOfConditions:     4
 
-Tool
+Tools
 4
   42000        63000
  168000       189000
@@ -22,7 +22,7 @@ Tool
  399000       420000
 Color:              255 0 0
 
-Hand
+Hands
 4
   21000        42000
  189000       210000
@@ -30,7 +30,7 @@ Hand
  357000       378000
 Color:              0 255 0
 
-Object
+Objects
 4
   63000        84000
  147000       168000
@@ -38,10 +38,10 @@ Object
  336000       357000
 Color:              0 0 255
 
-Phase
+Scrambled
 4
   84000       105000
  126000       147000
  252000       273000
  378000       399000
-Color:              128 128 128
+Color:              150 150 150
