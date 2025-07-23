@@ -1,0 +1,47 @@
+
+FileVersion:        2
+
+ResolutionOfTime:   msec
+
+Experiment:         4_MovingToolAndHandLocalizer
+
+BackgroundColor:    0 0 0
+TextColor:          255 255 255
+TimeCourseColor:    192 192 192
+TimeCourseThick:    2
+ReferenceFuncColor: 0 0 80
+ReferenceFuncThick: 2
+
+NrOfConditions:     4
+
+Tool
+4
+  42000        63000
+ 168000       189000
+ 231000       252000
+ 399000       420000
+Color:              255 0 0
+
+Hand
+4
+  21000        42000
+ 189000       210000
+ 273000       294000
+ 357000       378000
+Color:              0 255 0
+
+Object
+4
+  63000        84000
+ 147000       168000
+ 294000       315000
+ 336000       357000
+Color:              0 0 255
+
+Phase
+4
+  84000       105000
+ 126000       147000
+ 252000       273000
+ 378000       399000
+Color:              128 128 128
