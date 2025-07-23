@@ -18,7 +18,7 @@ for c = 1:4
         case "Objects" 
             colour = [0 0 255];
         case "Scrambled"
-            colour = [128 128 128];
+            colour = [150 150 150];
         otherwise
             error
     end
