@@ -194,7 +194,7 @@ for v = 1:(p.TIMING.BASELINE_INITIAL / p.TR)
     d.schedule.Phase(vol) = "Initial";
     d.schedule.HasAudio(vol) = false;
     d.schedule.HasIllum(vol) = false;
-    d.schedule.HasExpLED(vol) = false;
+    d.schedule.HasExpLED(vol) = true;
 end
 
 % trials
