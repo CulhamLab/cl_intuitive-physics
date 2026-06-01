@@ -36,7 +36,7 @@
 function NeoBOT_Localizer_Video(subject_number)
 
 %% Uncomment this only if Matlab fails to open the Psychtoolbox Screen (playback timing will be affected)
-% Screen('Preference', 'SkipSyncTests', 1)
+ Screen('Preference', 'SkipSyncTests', 1)
 
 %% Check number of inputs
 if nargin<1
@@ -309,8 +309,10 @@ KbCheck;
 fprintf('Waiting for all keys to release...\n')
 while KbCheck, end
 
-%draw baseline frame now
+%draw baseline frame now, with "Waiting for trigger..." text overlay
 Screen('PutImage', s.win, pres.imgBaseline); %~.007sec
+Screen('TextSize', s.win, 32);
+Screen('DrawText', s.win, 'Waiting for trigger...', 20, 20, [255 255 255]);
 Screen('DrawingFinished',s.win); %~.0001sec
 Screen('Flip',s.win); %~.01sec
 if p.SCREEN_HIDE_MOUSE
@@ -330,6 +332,11 @@ while 1
         error('Stop key was pressed.')
     end
 end
+
+%clear the "Waiting for trigger..." text by re-flipping baseline only
+Screen('PutImage', s.win, pres.imgBaseline);
+Screen('DrawingFinished',s.win);
+Screen('Flip',s.win);
 
 %get time zero first
 t0 = GetSecs;

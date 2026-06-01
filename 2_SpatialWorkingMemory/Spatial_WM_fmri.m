@@ -118,8 +118,9 @@ screenNumber = max(Screen('Screens'));
 Screen('Preference', 'SuppressAllWarnings', 1);
 white = WhiteIndex(screenNumber);
 black = BlackIndex(screenNumber);
+grey = round((white+black)/2); %50% grey
 blue = [0 0 255];
-[w screenRect]=Screen('OpenWindow',screenNumber, white);
+[w screenRect]=Screen('OpenWindow',screenNumber, grey);
 
 % rects
 box_size = round(screenRect(3)/12);
@@ -135,7 +136,7 @@ background_rect = CenterRect([0 0 4*box_size+5 3*box_size+5], screenRect);
 
 
 %fixation texture
-fix_image = white*ones(31,31);fix_image(:,14:18) = 0;fix_image(14:18,:) = 0;
+fix_image = grey*ones(31,31);fix_image(:,14:18) = 0;fix_image(14:18,:) = 0;
 fix_image = uint8(cat(3,fix_image,fix_image,fix_image));
 fixation_tex = Screen('MakeTexture', w, fix_image);
 
@@ -154,11 +155,25 @@ Screen('Flip', w);
 Screen('DrawTexture', w, fixation_tex); %fixation cross
 
 % wait for trigger
+aborted = false;
 while 1
     [~, ~, keyCode] = KbCheck(-3);
     if  keyCode(KbName('=+')) || keyCode(KbName('+')) || keyCode(KbName('t')) || keyCode(KbName('T')) || keyCode(KbName('5'))
         break
+    elseif keyCode(esckey)
+        aborted = true;
+        break
     end
+end
+
+if aborted
+    Priority(0);
+    Screen('CloseAll');
+    fclose(save_file);
+    fclose(para_file);
+    FlushEvents;
+    disp('Experiment aborted by user (Escape key pressed).');
+    return
 end
 
 run_start_time = Screen('Flip', w);
@@ -214,31 +229,47 @@ for trial = 1:length(trial_list);
             if any(keyCode(keysToCheck)) && ~(keyCode(KbName('=+')) || keyCode(KbName('+')) || keyCode(KbName('t')) || keyCode(KbName('T')) || keyCode(KbName('5'))) % use the keys for the button for input
                 response = find(keyCode,1);
             end
+            if keyCode(esckey)
+                aborted = true;
+                break
+            end
         end
-		
+
         Screen('DrawTexture', w, fixation_tex); %fixation cross
         Screen('Flip', w);
-    
+
     end
+
+    if aborted, break, end
     
     %record save file data
     trial_start=trial_end(trial)-trial_duration(trial);
     fprintf(save_file,'%i\t%i\t%i\n',trial_list(trial),correct_side(trial),response); %add trial to save file
     fprintf(para_file,'%i\t%i\t%i\n',trial_start,trial_list(trial),trial_duration(trial)); %add trial to para file
     
-    %wait for end of trial
-    while GetSecs < run_start_time + trial_end(trial);end
-    
+    %wait for end of trial (check escape during wait)
+    while GetSecs < run_start_time + trial_end(trial)
+        [~,~,keyCode] = KbCheck(-1);
+        if keyCode(esckey)
+            aborted = true;
+            break;
+        end
+    end
+
     %Abort if escape is pressed
     [~,~,keyCode] = KbCheck(-1);
-    if keyCode(esckey)
+    if keyCode(esckey) || aborted
+        aborted = true;
         break;
     end;
-    
+
 
 end %end all trials
 
 
+if aborted
+    disp('Experiment aborted by user (Escape key pressed).');
+end
 disp('total run time:')
 disp(GetSecs - run_start_time)
 

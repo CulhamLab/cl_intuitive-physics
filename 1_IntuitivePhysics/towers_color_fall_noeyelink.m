@@ -10,7 +10,7 @@ function [] = towers_color_fall_noeyelink(subj_ID,run_num)
 % 207 volumes with a 2s TR
 
 rng('default');
-stim_dir = 'C:/Users/VisionLab/Documents/GitHub/cl_intuitive-physics/1_IntuitivePhysics/new_towers_movies/';
+stim_dir = 'C:/Users/Karsten/Documents/GitHub/cl_intuitive-physics/1_IntuitivePhysics/new_towers_movies/';
 save_path = './results/';
 KbName('UnifyKeyNames')
 esckey = KbName('ESCAPE');
@@ -79,11 +79,24 @@ Screen(w,'DrawText','Waiting for trigger...',250,250,250);
 Screen('Flip', w);
 
 % wait for trigger
+aborted = false;
 while 1
     [~, ~, keyCode] = KbCheck(-1);
-    if  keyCode(KbName('=+')) || keyCode(KbName('+')) || keyCode(KbName('t')) || keyCode(KbName('T')) || keyCode(KbName('5')) 
+    if  keyCode(KbName('=+')) || keyCode(KbName('+')) || keyCode(KbName('t')) || keyCode(KbName('T')) || keyCode(KbName('5'))
+        break
+    elseif keyCode(esckey)
+        aborted = true;
         break
     end
+end
+
+if aborted
+    Priority(0);
+    Screen('CloseAll');
+    fclose(save_file);
+    FlushEvents;
+    disp('Experiment aborted by user (Escape key pressed).');
+    return
 end
 
 run_start_time = Screen('Flip', w);
@@ -136,8 +149,19 @@ for block_num = 1:size(block_order,2)
                 Screen('DrawTexture', w, tex, [], movie_rect); % Draw the new texture immediately to screen
                 Screen('Flip', w);
                 Screen('Close', tex); % Release texture
-                
+
+                %Abort if escape is pressed
+                [~,~,keyCode] = KbCheck(-1);
+                if keyCode(esckey)
+                    Screen('PlayMovie', movie, 0);
+                    Screen('CloseMovie', movie);
+                    aborted = true;
+                    break
+                end
+
             end;
+
+            if aborted, break, end
             
             Screen('Flip', w); %blank the screen at end of movie
             Screen('PlayMovie', movie, 0); % Stop playback
@@ -150,38 +174,51 @@ for block_num = 1:size(block_order,2)
                 if any(keyCode(keysToCheck)) && ~(keyCode(KbName('=+')) || keyCode(KbName('+')) || keyCode(KbName('t')) || keyCode(KbName('T')) || keyCode(KbName('5')))
                     response = find(keyCode,1);
                 end
+                if keyCode(esckey)
+                    aborted = true;
+                    break
+                end
             end
-            
+
             fprintf(save_file,'\t%i\n',response); %record response to save file
-            
+
+            if aborted, break, end
+
         end %end two movies
+
+        if aborted, break, end
         
     else %baseline block
         
         fprintf(save_file,'%4.3f\t%i\t%i\t%i\t%s\n',18*block_num - 18,block_type,18,block_num,'Baseline'); %record to save file
         
         while GetSecs < (run_start_time + 18*block_num) %wait for end of baseline period
-            
+
             %Abort if escape is pressed
             [~,~,keyCode] = KbCheck(-1);
             if keyCode(esckey)
+                aborted = true;
                 break;
             end;
-            
+
         end
-        
+
     end %end block
-    
-    
+
+
     %Abort if escape is pressed
     [~,~,keyCode] = KbCheck(-1);
-    if keyCode(esckey)
+    if keyCode(esckey) || aborted
+        aborted = true;
         break;
     end;
-    
+
 end
 
 %end of run - clean up
+if aborted
+    disp('Experiment aborted by user (Escape key pressed).');
+end
 disp('total run time:')
 disp(GetSecs - run_start_time)
 

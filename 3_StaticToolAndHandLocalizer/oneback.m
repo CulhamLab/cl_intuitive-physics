@@ -46,6 +46,7 @@ numstims=21; %how many items are there per category?
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Handling key presses and triggers
 KbName('UnifyKeyNames');
+escapeKey = KbName('ESCAPE'); %press this key at any time to abort the experiment
 % identities for 1 & 5 keys: keypad and keyboard (I think)
 % These values are predicated on the assumption that the S will have a
 % keypad and pushes the number '1' to indicate a stimulus repetition, and
@@ -190,7 +191,7 @@ rstart=tic();
 %% IMPORTANT: select EITHER KPDummyVolumes OR GPDummyVolumes. 
 %  You must select exactly 1 of these. GPDummyVolumes initializes gamepad
 %  as a side-effect. Comment out the one you are not using. 
- KPDummyVolumes(start_fixation_vols);
+ KPDummyVolumes(start_fixation_vols, w, fixation_img);
 % GPDummyVolumes(start_fixation_vols); %FOR USE WITH GAMEPAD
 
 %This is where the stims really begin
@@ -214,6 +215,11 @@ disp("Starting...");
 
 tstart=tic();
 while(trialctr <= length(schedule)) %so long as we have more trials to go...
+    [~, ~, kc]=KbCheck;
+    if kc(escapeKey)
+        abortExperiment();
+        return
+    end
     elapsed=toc(tstart);
     event=struct(); %a new empty event container is created for every stim
     event.trial=trialctr;
@@ -239,6 +245,11 @@ while(trialctr <= length(schedule)) %so long as we have more trials to go...
             %During that period, poll for subject response
 %             event=getGPOneBackResponse(event, startrt, trialctr, conditions, imgindices);
             event=getKPOneBackResponse(event, startrt, trialctr, conditions, imgindices);
+            [~, ~, kc]=KbCheck;
+            if kc(escapeKey)
+                abortExperiment();
+                return
+            end
         end
         [~, ~]=Screen('Flip', w); %show fixation
         Screen('Close', tex); %clear out fixation texture so as not to tax system memory
@@ -320,12 +331,12 @@ end
 % use getKPOnebackReponse when using numeric keypad
 % use getGPOnebackResponse when using gamepad
 function event=getKPOneBackResponse(event, startrt, trialctr, categories, stims)
-kpyes=KbName('1');
-%kpyes=KbName({'1!' '2@' '3#' '4$' 'r' 'g' 'b' 'y' '1' '2' '3' '4'});
-kbyes=KbName('1!');
-%kbyes=KbName({'1!' '2@' '3#' '4$' 'r' 'g' 'b' 'y' '1' '2' '3' '4'});
+%kpyes=KbName('1');
+kpyes=KbName({'1!' '2@' '3#' '4$' 'r' 'g' 'b' 'y' '1' '2' '3' '4'});
+%kbyes=KbName('1!');
+kbyes=KbName({'1!' '2@' '3#' '4$' 'r' 'g' 'b' 'y' '1' '2' '3' '4'});
 [~, ~, KeyCode]=KbCheck;
-if(KeyCode(kbyes) || KeyCode(kpyes))
+if(any(KeyCode(kbyes)) || any(KeyCode(kpyes)))
     %Log the new button press event, but only if an event has
     %not already been logged
     if(~isfield(event, 'RT'))
@@ -358,26 +369,52 @@ end
 
 %When using keypad input, this function listens for nvolumes worth of
 %triggers before proceeding
-function KPDummyVolumes(nvolumes)
-kptrigger=KbName('5');
-%kptrigger=KbName({'5%' 't' '5'});
-kbtrigger=KbName('5%');
-%kbtrigger=KbName({'5%' 't' '5'});
+function KPDummyVolumes(nvolumes, w, fixation_img)
+%kptrigger=KbName('5');
+kptrigger=KbName({'5%' 't' '5'});
+%kbtrigger=KbName('5%');
+kbtrigger=KbName({'5%' 't' '5'});
+escapeKey=KbName('ESCAPE');
 TRCounter=0;
+
+%Draw fixation + "Waiting for trigger..." overlay in white at top-left
+waitTex=Screen('MakeTexture', w, fixation_img);
+Screen('DrawTexture', w, waitTex);
+Screen('DrawText', w, 'Waiting for trigger...', 20, 20, [255 255 255]);
+Screen('Flip', w);
 %This counter is assuming that the scanner sends a keyboard trigger (The
 %Siemens Tim Trio 3T sends a numeric '5'). This may require modification on the line checking the values in KeyCode.
 %Whatever the case, count the number of triggers received from the scanner.
 %When the counter reaches end_fixation_vols, terminate
 while (TRCounter<nvolumes)
     [~, ~, KeyCode]=KbCheck;
-    while (KeyCode(kbtrigger)==0 && KeyCode(kptrigger)==0)
+    while (~any(KeyCode(kbtrigger)) && ~any(KeyCode(kptrigger)))
         [~, ~, KeyCode]=KbCheck;
         WaitSecs(0.001);
-        if(KeyCode(kbtrigger) || KeyCode(kptrigger))
+        if KeyCode(escapeKey)
+            abortExperiment();
+            return
+        end
+        if(any(KeyCode(kbtrigger)) || any(KeyCode(kptrigger)))
             TRCounter=TRCounter+1;
+            %Clear the "Waiting for trigger..." message on first trigger
+            if TRCounter==1
+                Screen('DrawTexture', w, waitTex);
+                Screen('Flip', w);
+            end
         end
     end
 end
+Screen('Close', waitTex);
+end
+
+function abortExperiment()
+%Cleanly close out the experiment if Escape is pressed.
+Screen('CloseAll');
+ShowCursor;
+fclose('all');
+Priority(0);
+disp('Experiment aborted by user (Escape key pressed).');
 end
 
 function GPDummyVolumes(nvolumes)
