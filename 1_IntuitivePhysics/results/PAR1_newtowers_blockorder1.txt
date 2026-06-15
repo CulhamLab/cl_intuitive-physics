@@ -1,2 +1,0 @@
-0.000	0	18	1	Baseline
-18.000	1	9	2	physics	47b.mov
